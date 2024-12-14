@@ -10,28 +10,28 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.nunocky.loginformsample.BuildConfig.TEST_PASSWORD
+import org.nunocky.loginformsample.BuildConfig.TEST_USERNAME
 
 @RunWith(AndroidJUnit4::class)
 class LoginScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-//    @get:Rule
-//    val composeTestRule = createAndroidComposeRule(MainActivity::class.java)
-
-
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun testShouldSuccess() {
+        val validUsername = TEST_USERNAME
+        val validPassword = TEST_PASSWORD
+
         composeTestRule.setContent {
             LoginScreen()
         }
 
         composeTestRule.waitUntilAtLeastOneExists(hasTestTag(TAG_TEXT_MESAGE))
 
-        // input username and password
-        composeTestRule.onNodeWithTag(TAG_USERNAME).performTextInput("abc")
-        composeTestRule.onNodeWithTag(TAG_PASSWORD).performTextInput("abc123")
+        composeTestRule.onNodeWithTag(TAG_USERNAME).performTextInput(validUsername)
+        composeTestRule.onNodeWithTag(TAG_PASSWORD).performTextInput(validPassword)
         composeTestRule.onNodeWithTag(TAG_BTN_LOGIN).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasTestTag(TAG_TEXT_MESAGE_LOADING))
@@ -45,14 +45,17 @@ class LoginScreenTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun testShouldFail() {
+        val invalidUserName = "xyz"
+        val invalidPassword = "xyz987"
+
         composeTestRule.setContent {
             LoginScreen()
         }
 
         composeTestRule.waitUntilAtLeastOneExists(hasTestTag(TAG_TEXT_MESAGE))
 
-        composeTestRule.onNodeWithTag(TAG_USERNAME).performTextInput("xyz")
-        composeTestRule.onNodeWithTag(TAG_PASSWORD).performTextInput("xyz123")
+        composeTestRule.onNodeWithTag(TAG_USERNAME).performTextInput(invalidUserName)
+        composeTestRule.onNodeWithTag(TAG_PASSWORD).performTextInput(invalidPassword)
         composeTestRule.onNodeWithTag(TAG_BTN_LOGIN).performClick()
 
         composeTestRule.waitUntilAtLeastOneExists(hasTestTag(TAG_TEXT_MESAGE_LOADING))

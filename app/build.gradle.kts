@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "TEST_USERNAME", project.properties["TEST_USERNAME"] as String)
+        buildConfigField("String", "TEST_PASSWORD", project.properties["TEST_PASSWORD"] as String)
     }
 
     buildTypes {
@@ -36,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

@@ -5,3 +5,15 @@
 
 [en] Enter your username and password to display success or failure. How should I manage
 authentication information when automating tests?
+
+## How to Use
+
+Write the username and password in app/gradle.properties
+
+```app/gradle.properties
+TEST_USERNAME="abc"
+TEST_PASSWORD="abc123"
+```
+
+and Just run the test
+
