@@ -1,4 +1,4 @@
-package org.nunocky.loginformsample
+package org.nunocky.loginformsample.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,63 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import org.nunocky.loginformsample.TAG_BTN_LOGIN
+import org.nunocky.loginformsample.TAG_PASSWORD
+import org.nunocky.loginformsample.TAG_TEXT_MESAGE
+import org.nunocky.loginformsample.TAG_TEXT_MESAGE_ERROR
+import org.nunocky.loginformsample.TAG_TEXT_MESAGE_LOADING
+import org.nunocky.loginformsample.TAG_TEXT_MESAGE_SUCCESS
+import org.nunocky.loginformsample.TAG_USERNAME
 
-
-/**
- * User Info
- */
-data class User(
-    val userId: Long, val username: String, val access_token: String
-)
-
-/**
- * pseudo login function
- */
-suspend fun _login(username: String, password: String): User {
-    delay(3_000)
-
-    if (username == "abc" && password == "abc123") {
-        return User(1, username, "xxxxx-xxxxx-xxxxxx")
-    } else {
-        throw Exception("Invalid username or password")
-    }
-}
-
-/**
- * LoginState
- */
-sealed class LoginState {
-    object Initial : LoginState()
-    object Loading : LoginState()
-    data class Success(val user: User) : LoginState()
-    data class Error(val e: Exception) : LoginState()
-}
-
-class LoginViewModel : ViewModel() {
-    private var _state = MutableStateFlow<LoginState>(LoginState.Initial)
-    var state = _state.asStateFlow()
-
-    fun processLogin(username: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _state.value = LoginState.Loading
-
-            _state.value = try {
-                val user = _login(username, password)
-                LoginState.Success(user)
-            } catch (e: Exception) {
-                LoginState.Error(e)
-            }
-        }
-    }
-}
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier) {

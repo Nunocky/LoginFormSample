@@ -12,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.nunocky.loginformsample.BuildConfig.TEST_PASSWORD
 import org.nunocky.loginformsample.BuildConfig.TEST_USERNAME
+import org.nunocky.loginformsample.login.LoginScreen
 
 @RunWith(AndroidJUnit4::class)
 class LoginScreenTest {
@@ -20,7 +21,7 @@ class LoginScreenTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun testShouldSuccess() {
+    fun testLoginSuccess() {
         val validUsername = TEST_USERNAME
         val validPassword = TEST_PASSWORD
 
@@ -44,7 +45,7 @@ class LoginScreenTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun testShouldFail() {
+    fun testLoginFail() {
         val invalidUserName = "xyz"
         val invalidPassword = "xyz987"
 
